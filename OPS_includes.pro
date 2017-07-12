@@ -264,23 +264,18 @@ LIBS += -llapack -lblas
 }
 
 win32 {
-INCLUDEPATH += C:\Progra~1\Tcl\include
-INCLUDEPATH += $$(HOME)\OpenSees\DEVELOPER\core
+INCLUDEPATH += .\ops
+INCLUDEPATH += "%MKLROOT%"\include
 
 # NOTE THAT THE OpenSees libs have to be created with /MD as opposed to /MT as runtime library
 # this is specified in C++ -> Code Generation -> RunTime Library
 # this is because Qt must be built with this option as they have memory issues if built /MT
 
+#LIBS += -L"C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2017.4.210\windows\mkl\lib\intel64_win" mkl_intel_lp64.lib mkl_sequential.lib mkl_core.lib
+LIBS += -L".\..\QtPile\lib" lapack.lib blas.lib
 
-CONFIG += static
-
-QMAKE_LFLAGS_DEBUG += /FORCE:MULTIPLE
-QMAKE_LFLAGS_DEBUG += /NODEFAULTLIB:"libc.lib"
-QMAKE_LFLAGS_RELEASE += /FORCE:MULTIPLE
-QMAKE_LFLAGS_RELEASE += /NODEFAULTLIB:"libc.lib"
-
-QMAKE_LFLAGS_RELEASE += /NODEFAULTLIB:"libcmt.lib"
-LIBPATH += "C:\Program Files (x86)\Intel\Composer XE\compiler\lib\intel64"
+DEFINES += -D_FORTRAN -D_RELIABILITY -D_TCL85
+QMAKE_CXXFLAGS += /GS /W3 /Gy   /Zi /Gm- /O2 /Ob1 /fp:precise /errorReport:prompt /GF /WX- /Zc:forScope /Gd /EHsc /MD
 
 
 } else {
